@@ -1,15 +1,19 @@
 import os
 from flask import Flask,render_template, request, url_for,redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_utils import create_database, database_exists
 
 from sqlalchemy.sql import func #import sqlalchemy functions
 import pymysql
 
-
 app=Flask(__name__)#create the flask app object with the name of the current module
 
+engine_url='mysql+pymysql://root:''@localhost/learnsqlalchemy'
+if not database_exists(engine_url):
+    create_database(engine_url)
 #Database Configuration with MySQL --> db type | username: password | path to database name    
-app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:''@localhost/learnsqlalchemy'
+app.config['SQLALCHEMY_DATABASE_URI']=engine_url
+
 db=SQLAlchemy(app)#create the database object
 
 class UserInfo(db.Model):
@@ -21,14 +25,6 @@ class UserInfo(db.Model):
     def __init__(self, username, password): #constructor of the UserInfo class
       self.username = username
       self.password = password
-
-# admin1=UserInfo('admin1','password1')
-# '''create the database table based on the python model 
-#     -> e.g. there's UserInfo and BookMetadata classes,
-#     then there will be two tables in the database'''
-# db.session.add(admin1) #add the admin1 object to the database
-# db.session.commit() #commit the changes to the database
-# UserInfo.query.all() #query to show all the data in the UserInfo table
 
 @app.route('/')
 def index():
