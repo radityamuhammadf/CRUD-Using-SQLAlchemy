@@ -5,14 +5,41 @@
 </head>
 <body>
     <h1>Add User</h1>
-    <form method="POST" action="{{ url_for('add_user') }}">
-        <label for="username">Username:</label>
-        <input type="text" name="username" required><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br>
-        
-        <input type="submit" value="Add User">
-    </form>
+    <div>
+        <form method="POST" action="{{ url_for('add_user') }}">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required><br>
+            
+            <label for="password">Password:</label>
+            <input type="password" name="password" required><br>
+            
+            <input type="submit" value="Add User">
+        </form>
+    </div>
+    
+    <h1>Update User</h1>
+    <div>
+        <form method="POST" action="{{ url_for('update_user') }}">
+            <label for="o_username">Old Username:</label>
+            <input type="text" name="o_username" required><br>
+            
+            <label for="n_username">New Username:</label>
+            <input type="text" name="n_username" required><br>
+            
+            <input type="submit" value="Change Username">
+        </form>
+    </div>
+    
+    <div>
+        <h1>THE Users</h1>
+        <h2> Search Result: {{ search_result }} </h2>
+        <ul>
+            {% for element in data %}
+            <li>{{ element.username }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
 </body>
 </html>
