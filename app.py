@@ -11,8 +11,8 @@ import pymysql
 app=Flask(__name__)#create the flask app object with the name of the current module
 
 engine_url='mysql+pymysql://root:''@localhost/learnsqlalchemy'
-# if not database_exists(engine_url):
-#     create_database(engine_url)
+if not database_exists(engine_url):
+    create_database(engine_url)
 # #Database Configuration with MySQL --> db type | username: password | path to database name    
 app.config['SQLALCHEMY_DATABASE_URI']=engine_url
 
@@ -33,6 +33,7 @@ class UserInfo(db.Model):
 
 @app.route('/')
 def index():
+    db.create_all()
     data = UserInfo.query.all() #get all the data from the UserInfo table
     search_query = 'hadehtiga'
     
