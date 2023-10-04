@@ -72,16 +72,6 @@ def update_user():
             session.commit()
         return redirect(url_for('index'))
     
-#Still cannot be used    
-# @app.route('/search_user', methods=['POST'])
-# def search_user():
-#     if request.method=='POST':
-#         search_query=request.form['search_query']
-#         search_statement=(select(UserInfo).where(UserInfo.username==search_query))
-#         with Session() as session:
-#             result=session.execute(search_statement)
-#         return render_template('search_result.html', search_result=result)
-
 
 if __name__=='__main__':
     app.run()
